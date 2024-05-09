@@ -6,7 +6,7 @@ export const swaggerUiOptions = {
 export const swaggerOptions = {
     swagger: {
         info: {
-            title: 'Tech Challenge - Orders Project',
+            title: 'Tech Challenge - Preparation Project',
             description: 'Project developed to serve a restaurant ordering system.',
             version: '1.0.0'
         },
@@ -15,8 +15,6 @@ export const swaggerOptions = {
             description: 'Find more info here'
         },
         tags: [
-            { name: 'Client', description: 'Client\'s endpoints' },
-            { name: 'Item', description: 'Item\'s endpoints' },
             { name: 'Order', description: 'Order\'s endpoints' }
         ]
     }
