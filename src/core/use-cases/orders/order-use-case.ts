@@ -1,10 +1,8 @@
 import { QueueServiceAdapter } from "../../../adapters/gateways/queue-service-adapter";
 import { OrderRepository } from "../../../adapters/gateways/repositories/order-repository";
 import { OrderUseCase } from "../../../adapters/gateways/use-cases/order-use-case";
-import { ItemPresenter } from "../../../adapters/presenters/item";
 import { OrderPresenter } from "../../../adapters/presenters/order";
 import { OrderDAO } from "../../../base/dao/order";
-import { ItemDTO } from "../../../base/dto/item";
 import { OrderDTO } from "../../../base/dto/order";
 import { OrderStatus } from "../../entities/enums/order-status";
 import { NotFoundException } from "../../entities/exceptions";
@@ -16,31 +14,28 @@ export class OrderUseCaseImpl implements OrderUseCase {
         private readonly queueService: QueueServiceAdapter) { }
 
     async create(order: OrderDTO): Promise<any> {
-
-            const orderItems = ItemPresenter.DTOsToDAOs(order.items!)
             const orderDAO = new OrderDAO()
+            orderDAO.idOrder = order.idOrder
             orderDAO.status = order.status
-            orderDAO.clientId = order.clientId
-            orderDAO.total = order.total
             orderDAO.createdAt = order.createdAt
             orderDAO.updatedAt = order.updatedAt
-            orderDAO.items = orderItems
     
+            await this.queueService.dequeue(order)
             const orderSaved = await this.orderRepository.save(orderDAO)
             return OrderDAO.daoToEntity(orderSaved);        
     }
 
-    async findByParams(clientId?: number | undefined, status?: string | undefined): Promise<[] | OrderEntity[]> {
-        let order: OrderDAO[] = (!clientId && !status) ?
+    async findByParams(status: string): Promise<[] | OrderEntity[]> {
+        let order: OrderDAO[] = (status != "") ?
             await this.orderRepository.getAll() :
-            await this.orderRepository.findByParams(clientId, status)
+            await this.orderRepository.findByParams(status)
         
         return OrderDAO.daosToEntities(order)
     }
 
     async getById(orderId: number): Promise<OrderEntity | null> {
         const order : OrderDAO | null = await this.orderRepository.getById(orderId)
-        if(!order?.id) {
+        if(!order?.idOrder) {
             throw new NotFoundException('Order not found!')
         }
 
@@ -49,6 +44,6 @@ export class OrderUseCaseImpl implements OrderUseCase {
 
     async update(order: OrderDTO, status: string): Promise<void> {
         await this.queueService.dequeue(order)
-        await this.orderRepository.update(order.id!, status)
+        await this.orderRepository.update(order.idOrder!, status)
     }
 }

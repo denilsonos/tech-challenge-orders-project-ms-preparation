@@ -1,16 +1,13 @@
 import { OrderDTO } from "../../base/dto/order";
 import { OrderEntity } from "../../core/entities/order";
-import { ItemPresenter } from "./item";
 
 export class OrderPresenter {
 
     static EntityToDto(orderEntity: OrderEntity): OrderDTO{
-        return new OrderDTO(orderEntity.status,
-            orderEntity.clientId,
+        return new OrderDTO(orderEntity.idOrder,
+            orderEntity.status, 
             orderEntity.createdAt,
-            orderEntity.updatedAt, 
-            ItemPresenter.EntitiesToDto(orderEntity.items!),
-            orderEntity.id);
+            orderEntity.updatedAt);
     }
 
     static EntitiesToDto(ordersEntities: OrderEntity[]): OrderDTO[] {

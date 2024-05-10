@@ -7,8 +7,8 @@ import { DbConnection } from '../../gateways/db/db-connection';
 // no entity, this is fake queue with typeorm (the famous gambiarra)
 @Entity('queue')
 export class FakeQueue {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
-  public id?: number
+  @PrimaryGeneratedColumn({ type: 'int', name: 'idOrder' })
+  public idOrder?: number
 
   @Column({ type: 'varchar', name: 'status' })
   public status!: string
@@ -34,7 +34,7 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
   async toqueue(order: OrderDAO): Promise<void> {
     const orderRepository = this.database.getConnection().getRepository(OrderDAO);
     order.status = OrderStatus.Received
-    await orderRepository.update(order.id!, { status: order.status });
+    await orderRepository.update(order.idOrder!, { status: order.status });
 
     const queueRepository = this.database.getConnection().getRepository(FakeQueue);
     const queue = new FakeQueue();
@@ -55,8 +55,8 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
 
       if (oldestReceivedOrder) {
         await Promise.all([
-          queueRepository.update(oldestReceivedOrder.id!, { status: OrderStatus.InPreparation }),
-          orderRepository.update(oldestReceivedOrder.order.id!, { status: OrderStatus.InPreparation })
+          queueRepository.update(oldestReceivedOrder.idOrder!, { status: OrderStatus.InPreparation }),
+          orderRepository.update(oldestReceivedOrder.order.idOrder!, { status: OrderStatus.InPreparation })
         ]);
       }
     }
@@ -74,8 +74,8 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
 
       if (oldestInPreparationOrder) {
         await Promise.all([
-          queueRepository.update(oldestInPreparationOrder.id!, { status: OrderStatus.Ready }),
-          orderRepository.update(oldestInPreparationOrder.order.id!, { status: OrderStatus.Ready })
+          queueRepository.update(oldestInPreparationOrder.idOrder!, { status: OrderStatus.Ready }),
+          orderRepository.update(oldestInPreparationOrder.order.idOrder!, { status: OrderStatus.Ready })
         ]) 
       }
     }
@@ -88,8 +88,8 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
   async dequeue(order: OrderDAO): Promise<void> {
     const queueRepository = this.database.getConnection().getRepository(FakeQueue);
     const queue = await queueRepository.findOne({
-      where: { order: { id: order.id } },
+      where: { order: { idOrder: order.idOrder } },
     });
-    await queueRepository.delete({ id: queue!.id })
+    await queueRepository.delete({ idOrder: queue!.idOrder })
   }
 }

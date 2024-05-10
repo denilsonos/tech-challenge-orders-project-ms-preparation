@@ -42,10 +42,9 @@ export class OrderController implements Order {
       throw new BadRequestException('Validation error!', result.error.issues)
     }
 
-    const now = new Date()
     const {idOrder, status, createdAt} = result.data
        
-    const orderToCreate = new OrderDTO(Number(idOrder), status, createdAt, now)
+    const orderToCreate = new OrderDTO(Number(idOrder), status, createdAt, new Date())
     
     const orderCreated = await this.orderUseCase.create(orderToCreate)   
     return OrderPresenter.EntityToDto(orderCreated)
@@ -62,25 +61,10 @@ export class OrderController implements Order {
       throw new BadRequestException('Validation error!', result.error.issues)
     }
 
-    const {idOrder, status, createdAt} = result.data
+    const {status} = result.data
 
-    const orders: OrderEntity[] = await this.orderUseCase.findByParams(clientId, status)
+    const orders: OrderEntity[] = await this.orderUseCase.findByParams(status)
     return OrderPresenter.EntitiesToDto(orders)
-  }
-
-  async get(identifier: any): Promise<OrderDTO> {
-    const result = this.validateOrderId(identifier)
-
-    if (!result.success) {
-      throw new BadRequestException('Validation error!', result.error.issues)
-    }
-
-    const order = await this.orderUseCase.getById(Number(result.data.IdOrder))
-    if(!order){
-      throw new NotFoundException("Order not found!")
-    }
-
-    return OrderPresenter.EntityToDto(order)
   }
 
   async update(bodyParams: any, params: unknown): Promise<void> {
@@ -111,17 +95,5 @@ export class OrderController implements Order {
     }
 
     await this.orderUseCase.update(OrderPresenter.EntityToDto(order), result.data.status)
-  }
-
-  private validateOrderId(bodyParams: unknown){
-    const schema = z.object({
-      IdOrder: z.string().min(1).refine(value => {
-        const parsedNumber = Number(value);
-        return !isNaN(parsedNumber);
-      }, {
-        message: 'Invalid number format',
-      })
-    })
-    return schema.safeParse(bodyParams)
   }
 }

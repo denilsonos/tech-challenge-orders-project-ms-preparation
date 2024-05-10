@@ -14,21 +14,18 @@ export class OrderRepositoryImpl implements OrderRepository {
 
   async getById(orderId: number): Promise<OrderDAO | null> {
     const repository = this.database.getConnection().getRepository(OrderDAO)
-    return await repository.findOne({ where: { id: orderId }, relations: ['items'] })
+    return await repository.findOne({ where: { idOrder: orderId }})
   }
 
-  async findByParams(clientId?: number | undefined, status?: string | undefined): Promise<OrderDAO[] | []> {
+  async findByParams(status: string): Promise<OrderDAO[] | []> {
     const repository = this.database.getConnection().getRepository(OrderDAO)
     return await repository.find({
       order: {
         createdAt: 'DESC'
       },
       where: {
-        clientId: clientId,
         status: status
       },
-      relations: ['items'],
-
     })
   }
 

@@ -1,10 +1,7 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import { ClientDAO } from '../../base/dao/client'
 import { OrmAdapter } from '../../adapters/gateways/orm-adapter'
 import { OrderDAO } from '../../base/dao/order'
-import { ItemDAO } from '../../base/dao/item'
-import { PaymentDAO } from '../../base/dao/payment'
 import { FakeQueue } from '../../adapters/external-services/fake-queue-service/fake-queue-service-adapter'
 
 
@@ -42,7 +39,7 @@ export class MysqlOrmAdapter implements OrmAdapter {
   private databaseConnection() {
     return new DataSource({
       type: 'mysql',
-      host: DB_HOST,
+      host: "0.0.0.0",
       port: Number(DB_PORT),
       username: DB_USER,
       password: DB_PASSWORD,
@@ -51,9 +48,6 @@ export class MysqlOrmAdapter implements OrmAdapter {
       logging: false,
       entities: [
         OrderDAO,
-        ItemDAO,
-        ClientDAO,
-        PaymentDAO,
         FakeQueue
       ],
       migrations: [],

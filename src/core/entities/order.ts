@@ -1,6 +1,6 @@
 import  {FakeQueue } from "../../adapters/external-services/fake-queue-service/fake-queue-service-adapter"
 export class OrderEntity {
-  public id?: number
+  public idOrder!: number
 
   public status!: string
 
@@ -10,10 +10,10 @@ export class OrderEntity {
 
   public queue?: FakeQueue
 
-  constructor(status: string, createdAt: Date, updatedAt: Date, id?: number) {
+  constructor(idOrder: number, status: string, createdAt: Date, updatedAt: Date) {
     this.status= status
     this.createdAt = createdAt
     this.updatedAt = updatedAt
-    this.id = id
+    this.idOrder = idOrder
   }
 }

@@ -2,7 +2,7 @@ import { FakeQueue } from "../../adapters/external-services/fake-queue-service/f
 import { OrderEntity } from "../../core/entities/order";
 
 export class OrderDTO {
-  public id?: number
+  public idOrder!: number
 
   public status!: string
 
@@ -12,8 +12,8 @@ export class OrderDTO {
 
   public queue?: FakeQueue
 
-  constructor(id?: number, status: string, createdAt: Date, updatedAt: Date) { 
-    this.id = id
+  constructor(idOrder: number, status: string, createdAt: Date, updatedAt: Date) { 
+    this.idOrder = idOrder
     this.status = status
     this.createdAt = createdAt
     this.updatedAt = updatedAt
@@ -22,10 +22,11 @@ export class OrderDTO {
   public fromEntity(): OrderEntity {
     
     const order = new OrderEntity(
+      this.idOrder,
       this.status,
       this.createdAt,
       this.updatedAt, 
-      this.id
+      
     )
     return order
   }
