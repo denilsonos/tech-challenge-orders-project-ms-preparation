@@ -130,7 +130,7 @@ describe('OrderController', () => {
 
             // Act
             try {
-                await orderController.create(bodyParams);
+                await orderController.findByParams(bodyParams);
             } catch (error) {
                 expect((error as any).message).toEqual("Validation error!");
             }
@@ -159,7 +159,9 @@ describe('OrderController', () => {
 
         it('should return error status missing', async () => {
             // Arrange
-            const bodyParams = {};
+            const bodyParams = {
+                status: ""
+            };
 
             const params = {
                 id: "1"
@@ -170,7 +172,7 @@ describe('OrderController', () => {
                 await orderController.update(bodyParams, params);
             } catch (error) {
                 //Assert
-                expect((error as any).message).toEqual("Validation error!");
+                expect((error as any).message).toEqual("Validation error! Status must be a one of CREATED, PENDING_PAYMENT, RECEIVED, IN_PREPARATION, READY, FINISHED");
             }
         });
 

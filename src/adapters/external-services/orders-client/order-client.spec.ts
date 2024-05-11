@@ -1,7 +1,7 @@
 import { OrderClientServiceAdapter } from "./order-client";
 import { OrderStatus } from "../../../core/entities/enums/order-status";
-const axios = require("axios");
-const MockAdapter = require("axios-mock-adapter");
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter"
 
 describe('OrderClient', () => {
     var axiosMock = new MockAdapter(axios);
