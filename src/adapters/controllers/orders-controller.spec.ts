@@ -159,6 +159,23 @@ describe('OrderController', () => {
 
         it('should return error status missing', async () => {
             // Arrange
+            const bodyParams = {};
+
+            const params = {
+                id: "1"
+            };
+
+            // Act
+            try {
+                await orderController.update(bodyParams, params);
+            } catch (error) {
+                //Assert
+                expect((error as any).message).toEqual("Validation error!");
+            }
+        });
+
+        it('should return error status empty', async () => {
+            // Arrange
             const bodyParams = {
                 status: ""
             };
