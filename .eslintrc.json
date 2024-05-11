@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/node"
+  ],
+  "rules": {
+    "camelcase": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-useless-constructor": 0,
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
+}
