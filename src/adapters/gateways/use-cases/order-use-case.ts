@@ -5,4 +5,5 @@ export interface OrderUseCase {
     create(order: OrderDTO): Promise<OrderEntity>;
     findByParams(status?: string): Promise<OrderEntity[] | []>;
     update(order: OrderDTO, status: string): Promise<void>
+    getById(orderId: number): Promise<OrderEntity | null>
 }

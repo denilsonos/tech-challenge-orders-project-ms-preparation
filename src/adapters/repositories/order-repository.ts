@@ -14,7 +14,7 @@ export class OrderRepositoryImpl implements OrderRepository {
 
   async getById(orderId: number): Promise<OrderDAO | null> {
     const repository = this.database.getConnection().getRepository(OrderDAO)
-    return await repository.findOne({ where: { idOrder: orderId }})
+    return await repository.findOneBy({ idOrder: orderId })
   }
 
   async findByParams(status: string): Promise<OrderDAO[] | []> {
@@ -37,7 +37,6 @@ export class OrderRepositoryImpl implements OrderRepository {
       .orderBy(`(case when order.status = '${OrderStatus.Ready}' then 1 when order.status = '${OrderStatus.InPreparation}' then 2 when order.status = '${OrderStatus.Received}' then 3 else 4 end)`)
       .where('order.status IN(:...status)', { status: [OrderStatus.Ready, OrderStatus.InPreparation, OrderStatus.Received] }).getMany();
   }
-
 
   async update(orderId: number, status: string): Promise<void> {
     const repository = this.database.getConnection().getRepository(OrderDAO)

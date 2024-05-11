@@ -1,5 +1,5 @@
 import { Order } from "../gateways/interfaces/order";
-import { z } from "zod";
+import { number, z } from "zod";
 import { BadRequestException, ConflictException, NotFoundException } from "../../core/entities/exceptions";
 import { OrderRepository } from "../gateways/repositories/order-repository";
 import { OrderUseCase } from "../gateways/use-cases/order-use-case";
@@ -24,14 +24,13 @@ export class OrderController implements Order {
     this.orderUseCase = new OrderUseCaseImpl(this.orderRepository, this.queueService)
   }
 
+  setDependencies(orderUseCase: OrderUseCase){
+    this.orderUseCase = orderUseCase
+  }
+
   async create(bodyParams: unknown): Promise<OrderDTO> {
     const schema = z.object({
-      idOrder: z.string().min(1).refine(value => {
-        const parsedNumber = Number(value);
-        return !isNaN(parsedNumber);
-      }, {
-        message: 'Invalid number format',
-      }),
+      idOrder: z.number(),
       status: z.nativeEnum(OrderStatus),
       createdAt: z.coerce.date().optional(),
     })

@@ -18,16 +18,4 @@ export class OrderDTO {
     this.createdAt = createdAt
     this.updatedAt = updatedAt
   }
-
-  public fromEntity(): OrderEntity {
-    
-    const order = new OrderEntity(
-      this.idOrder,
-      this.status,
-      this.createdAt,
-      this.updatedAt, 
-      
-    )
-    return order
-  }
 }
