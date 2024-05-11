@@ -1,4 +1,5 @@
 import { FakeQueue } from "../../../adapters/external-services/fake-queue-service/fake-queue-service-adapter";
+import { OrderClientAdapter } from "../../../adapters/gateways/orders-client-adapter";
 import { QueueServiceAdapter } from "../../../adapters/gateways/queue-service-adapter";
 import { OrderRepository } from "../../../adapters/gateways/repositories/order-repository";
 import { OrderDAO } from "../../../base/dao/order";
@@ -20,6 +21,10 @@ const queueServiceAdapterSpy: jest.Mocked<QueueServiceAdapter> = {
   dequeue: jest.fn(),
 }
 
+const orderClientAdapterSpy: jest.Mocked<OrderClientAdapter> = {
+  updateStatus: jest.fn(),
+}
+
 const mockOrderDao: OrderDAO = {
   idOrder: 1,
   status: OrderStatus.Created,
@@ -34,7 +39,7 @@ const mockOrderDTO = new OrderDTO(
   new Date(),
   new Date())
 
-const sut = new OrderUseCaseImpl(orderRepositorySpy, queueServiceAdapterSpy)
+const sut = new OrderUseCaseImpl(orderRepositorySpy, queueServiceAdapterSpy, orderClientAdapterSpy)
 
 describe('Order use case methods', () => {
   describe('create', () => {
@@ -116,6 +121,7 @@ describe('Order use case methods', () => {
 
     it('must successfully update an order', async () => {
       //Arrange
+      orderClientAdapterSpy.updateStatus.mockResolvedValue()
       queueServiceAdapterSpy.dequeue.mockResolvedValue()
       orderRepositorySpy.update.mockResolvedValue()
 
@@ -123,6 +129,8 @@ describe('Order use case methods', () => {
       await expect(sut.update(mockOrderDTO, OrderStatus.Created)).resolves.not.toThrow()
 
       //Assert
+      expect(orderRepositorySpy.update).toHaveBeenCalled()
+      expect(orderClientAdapterSpy.updateStatus).toHaveBeenCalled()
       expect(orderRepositorySpy.update).toHaveBeenCalled()
     })
   })

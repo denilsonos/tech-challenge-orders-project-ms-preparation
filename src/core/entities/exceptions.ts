@@ -37,3 +37,10 @@ export class AlreadyExistsException extends Exception {
     super(AlreadyExistsException.statusCode, { message, issues })
   }
 }
+
+export class InternalServerErrorException extends Exception {
+  private static statusCode = 500;
+  constructor(message: string = 'Internal Error', issues?: any[]) {
+    super(InternalServerErrorException.statusCode, { message, issues })
+  }
+}

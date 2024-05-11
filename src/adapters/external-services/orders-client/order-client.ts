@@ -1,21 +1,20 @@
+import { OrderDTO } from "../../../base/dto/order";
+import { Exception, InternalServerErrorException } from "../../../core/entities/exceptions";
 import { OrderClientAdapter } from "../../gateways/orders-client-adapter";
 
 export class OrderClientServiceAdapter implements OrderClientAdapter {
-    constructor() { }
+    private axios: any;
 
-    async getById(idOrder: number): Promise<any> {
-        const axios = require('axios').default;
+    constructor() {
+        this.axios = require('axios').default;
+    }
 
-        try {
-            const response = await axios.get("https://api.github.com/users/mapbox");
-            console.log(response.data);
-            console.log(response.status);
-            console.log(response.statusText);
-            console.log(response.headers);
-            console.log(response.config);
-        } catch (error) {
-            // Handle error
-            console.error(error);
-        }
+    async updateStatus(idOrder: number, status: string): Promise<void> {  
+        var basePath = process.env.ORDERS_MS_HOST 
+        var url = basePath + "/orders/" + idOrder
+        
+        const response = await this.axios.patch(url,{
+            status: status
+        });
     }
 }

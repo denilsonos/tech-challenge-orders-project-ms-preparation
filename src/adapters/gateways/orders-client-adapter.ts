@@ -1,5 +1,5 @@
 import { OrderDTO } from "../../base/dto/order";
 
 export interface OrderClientAdapter {
-    getById(idOrder: number): Promise<OrderDTO>
-  }
+  updateStatus(idOrder: number, status: string): Promise<void>
+}

@@ -12,16 +12,20 @@ import { OrderPresenter } from "../presenters/order";
 import { OrderEntity } from "../../core/entities/order";
 import { DbConnection } from "../gateways/db/db-connection";
 import { OrderStatus } from "../../core/entities/enums/order-status";
+import { OrderClientAdapter } from "../gateways/orders-client-adapter";
+import { OrderClientServiceAdapter } from "../external-services/orders-client/order-client";
 
 export class OrderController implements Order {
   private orderUseCase: OrderUseCase;
   private orderRepository: OrderRepository;
-  private queueService : QueueServiceAdapter
+  private queueService : QueueServiceAdapter;
+  private orderClient : OrderClientAdapter;
 
   constructor(readonly database: DbConnection) { 
     this.orderRepository = new OrderRepositoryImpl(database)
     this.queueService = new FakeQueueServiceAdapter(database)
-    this.orderUseCase = new OrderUseCaseImpl(this.orderRepository, this.queueService)
+    this.orderClient = new OrderClientServiceAdapter()
+    this.orderUseCase = new OrderUseCaseImpl(this.orderRepository, this.queueService, this.orderClient)
   }
 
   setDependencies(orderUseCase: OrderUseCase){
