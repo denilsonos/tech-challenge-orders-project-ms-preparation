@@ -38,15 +38,6 @@ export class OrderUseCaseImpl implements OrderUseCase {
         return OrderDAO.daosToEntities(order)
     }
 
-    async getById(orderId: number): Promise<OrderEntity | null> {
-        const order : OrderDAO | null = await this.orderRepository.getById(orderId)
-        if(!order?.idOrder) {
-            throw new NotFoundException('Order not found!')
-        }
-
-        return  OrderDAO.daoToEntity(order)
-    }
-
     async update(order: OrderDTO, status: string): Promise<void> {
         await this.queueService.dequeue(order)
         await this.orderRepository.update(order.idOrder!, status)
