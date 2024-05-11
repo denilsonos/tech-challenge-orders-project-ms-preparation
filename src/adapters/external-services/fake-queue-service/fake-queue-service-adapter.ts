@@ -7,8 +7,8 @@ import { DbConnection } from '../../gateways/db/db-connection';
 // no entity, this is fake queue with typeorm (the famous gambiarra)
 @Entity('queue')
 export class FakeQueue {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'idOrder' })
-  public idOrder?: number
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+  public id?: number
 
   @Column({ type: 'varchar', name: 'status' })
   public status!: string
@@ -55,7 +55,7 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
 
       if (oldestReceivedOrder) {
         await Promise.all([
-          queueRepository.update(oldestReceivedOrder.idOrder!, { status: OrderStatus.InPreparation }),
+          queueRepository.update(oldestReceivedOrder.id!, { status: OrderStatus.InPreparation }),
           orderRepository.update(oldestReceivedOrder.order.idOrder!, { status: OrderStatus.InPreparation })
         ]);
       }
@@ -74,7 +74,7 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
 
       if (oldestInPreparationOrder) {
         await Promise.all([
-          queueRepository.update(oldestInPreparationOrder.idOrder!, { status: OrderStatus.Ready }),
+          queueRepository.update(oldestInPreparationOrder.id!, { status: OrderStatus.Ready }),
           orderRepository.update(oldestInPreparationOrder.order.idOrder!, { status: OrderStatus.Ready })
         ]) 
       }
@@ -90,6 +90,6 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
     const queue = await queueRepository.findOne({
       where: { order: { idOrder: order.idOrder } },
     });
-    await queueRepository.delete({ idOrder: queue!.idOrder })
+    await queueRepository.delete({ id: queue!.id })
   }
 }

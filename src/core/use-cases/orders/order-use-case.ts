@@ -5,7 +5,7 @@ import { OrderPresenter } from "../../../adapters/presenters/order";
 import { OrderDAO } from "../../../base/dao/order";
 import { OrderDTO } from "../../../base/dto/order";
 import { OrderStatus } from "../../entities/enums/order-status";
-import { NotFoundException } from "../../entities/exceptions";
+import { AlreadyExistsException, NotFoundException } from "../../entities/exceptions";
 import { OrderEntity } from "../../entities/order";
 
 export class OrderUseCaseImpl implements OrderUseCase {
@@ -14,19 +14,24 @@ export class OrderUseCaseImpl implements OrderUseCase {
         private readonly queueService: QueueServiceAdapter) { }
 
     async create(order: OrderDTO): Promise<any> {
-            const orderDAO = new OrderDAO()
-            orderDAO.idOrder = order.idOrder
-            orderDAO.status = order.status
-            orderDAO.createdAt = order.createdAt
-            orderDAO.updatedAt = order.updatedAt
-    
-            await this.queueService.dequeue(order)
+        const orderDAO = new OrderDAO()
+        orderDAO.idOrder = order.idOrder
+        orderDAO.status = order.status
+        orderDAO.createdAt = order.createdAt
+        orderDAO.updatedAt = order.updatedAt
+
+        const orderFound : OrderDAO | null = await this.orderRepository.getById(orderDAO.idOrder)
+        if(!orderFound?.idOrder) {
             const orderSaved = await this.orderRepository.save(orderDAO)
-            return OrderDAO.daoToEntity(orderSaved);        
+            await this.queueService.toqueue(order)
+            return OrderDAO.daoToEntity(orderSaved); 
+        }else{
+            throw new AlreadyExistsException('Order ID already registered')
+        } 
     }
 
     async findByParams(status: string): Promise<[] | OrderEntity[]> {
-        let order: OrderDAO[] = (status != "") ?
+        let order: OrderDAO[] = (status == OrderStatus.Empty) ?
             await this.orderRepository.getAll() :
             await this.orderRepository.findByParams(status)
         

@@ -20,6 +20,8 @@ export const updateOrderRoute = async (fastify: FastifyInstance) => {
       .catch((error) => {
         if (error instanceof Exception) {
           return reply.status(error.statusCode).send(error.body)
+        }else {
+          return reply.status(500).send(error.message)
         }
       })
     },

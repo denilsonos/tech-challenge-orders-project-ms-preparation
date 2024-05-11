@@ -13,7 +13,7 @@ services:
     links: 
       - db
     environment:
-      - DB_HOST=db
+      - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_NAME}

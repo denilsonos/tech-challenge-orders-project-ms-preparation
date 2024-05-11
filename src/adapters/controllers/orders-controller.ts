@@ -33,7 +33,7 @@ export class OrderController implements Order {
         message: 'Invalid number format',
       }),
       status: z.nativeEnum(OrderStatus),
-      createdAt: z.date(),
+      createdAt: z.coerce.date().optional(),
     })
 
     const result = schema.safeParse(bodyParams)
@@ -44,56 +44,70 @@ export class OrderController implements Order {
 
     const {idOrder, status, createdAt} = result.data
        
-    const orderToCreate = new OrderDTO(Number(idOrder), status, createdAt, new Date())
-    
+    const orderToCreate = new OrderDTO(Number(idOrder), status, createdAt!, new Date())
     const orderCreated = await this.orderUseCase.create(orderToCreate)   
     return OrderPresenter.EntityToDto(orderCreated)
   }
 
   async findByParams(bodyParams: unknown): Promise<OrderDTO[]> {
-    const schema = z.object({
-      status: z.nativeEnum(OrderStatus),
-    })
+      const schema = z.object({
+        status: z.nativeEnum(OrderStatus).optional(),
+      })
+  
+      const result = schema.safeParse(bodyParams)
+  
+      if (!result.success) {
+        throw new BadRequestException('Validation error!', result.error.issues)
+      }
 
-    const result = schema.safeParse(bodyParams)
+      const {status} = result.data  
 
-    if (!result.success) {
-      throw new BadRequestException('Validation error!', result.error.issues)
-    }
-
-    const {status} = result.data
-
-    const orders: OrderEntity[] = await this.orderUseCase.findByParams(status)
-    return OrderPresenter.EntitiesToDto(orders)
+      const orders: OrderEntity[] = await this.orderUseCase.findByParams(status)
+      return OrderPresenter.EntitiesToDto(orders)
   }
 
   async update(bodyParams: any, params: unknown): Promise<void> {
     const schema = z.object({
-      idOrder: z.string().min(1).refine(value => {
-        const parsedNumber = Number(value);
-        return !isNaN(parsedNumber);
-      }, {
-        message: 'Invalid number format',
-      }),
       status: z.nativeEnum(OrderStatus),
     })
 
-    const result = schema.safeParse(bodyParams)
+    const statusResult = schema.safeParse(bodyParams)
+    const orderIdResult = this.validateId(params)
 
-    if (!result.success) {
-      throw new BadRequestException('Validation error!', result.error.issues)
+    if (!statusResult.success) {
+      throw new BadRequestException('Validation error!', statusResult.error.issues)
     }
 
-    const order = await this.orderUseCase.getById(Number(result.data.idOrder))
+    if (statusResult.data.status == OrderStatus.Empty) {
+      throw new BadRequestException('Validation error! Status must be a one of CREATED, PENDING_PAYMENT, RECEIVED, IN_PREPARATION, READY, FINISHED', undefined)
+    }
+
+    if (!orderIdResult.success) {
+      throw new BadRequestException('Validation error!', orderIdResult.error.issues)
+    }
+
+    const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
     if(!order){
       throw new NotFoundException("Order not found!")
     }
 
-    if (order.status !== OrderStatus.Ready) {
+    if (order.status == OrderStatus.Ready) {
       throw new ConflictException("Order is ready!")
-    }
+    } 
 
-    await this.orderUseCase.update(OrderPresenter.EntityToDto(order), result.data.status)
+    await this.orderUseCase.update(OrderPresenter.EntityToDto(order), statusResult.data.status)
+  }
+
+  private validateId(bodyParams: unknown){
+    const schema = z.object({
+      id: z.string().min(1).refine(value => {
+        const parsedNumber = Number(value);
+        return !isNaN(parsedNumber);
+      }, {
+        message: 'Invalid number format',
+      })
+    })
+    return schema.safeParse(bodyParams)
   }
 }

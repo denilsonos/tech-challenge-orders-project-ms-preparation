@@ -12,12 +12,18 @@ export const findOrderRoute = async (fastify: FastifyInstance) => {
       const dbConn = new DbConnectionImpl()
       const controller = new OrderController(dbConn);
 
-      await controller.findByParams(request.params).then((orders) => {
-        return reply.status(200).send({ orders })
+      await controller.findByParams(request.query).then((orders) => {
+        if (orders.length > 0) {
+          return reply.status(200).send({ orders })
+        }else{
+          return reply.status(204).send({})
+        }
       })
       .catch((error) => {
         if (error instanceof Exception) {
           return reply.status(error.statusCode).send(error.body)
+        }else {
+          return reply.status(500).send(error.message)
         }
       })
     },

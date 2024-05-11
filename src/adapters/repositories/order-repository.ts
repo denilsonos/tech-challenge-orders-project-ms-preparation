@@ -35,8 +35,7 @@ export class OrderRepositoryImpl implements OrderRepository {
     return await repository.createQueryBuilder('order')
       .addOrderBy('order.createdAt', 'DESC')
       .orderBy(`(case when order.status = '${OrderStatus.Ready}' then 1 when order.status = '${OrderStatus.InPreparation}' then 2 when order.status = '${OrderStatus.Received}' then 3 else 4 end)`)
-      .where('order.status IN(:...status)', { status: [OrderStatus.Ready, OrderStatus.InPreparation, OrderStatus.Received] })
-      .leftJoinAndSelect('order.items', 'item').getMany();
+      .where('order.status IN(:...status)', { status: [OrderStatus.Ready, OrderStatus.InPreparation, OrderStatus.Received] }).getMany();
   }
 
 

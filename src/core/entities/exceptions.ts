@@ -30,3 +30,10 @@ export class ConflictException extends Exception {
     super(ConflictException.statusCode, { message, issues })
   }
 }
+
+export class AlreadyExistsException extends Exception {
+  private static statusCode = 403;
+  constructor(message: string = 'Bad Request', issues?: any[]) {
+    super(AlreadyExistsException.statusCode, { message, issues })
+  }
+}

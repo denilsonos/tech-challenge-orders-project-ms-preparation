@@ -13,14 +13,16 @@ export const createOrderRoute = async (fastify: FastifyInstance) => {
       const controller = new OrderController(dbConn);
 
       await controller.create(request.body)
-      .then((orderSaved) => {
+      .then(() => {
         return reply.status(201).send({
-          message: 'Order '+ orderSaved.idOrder +' successfully registered!',
+          message: 'Order successfully registered!',
         });
       })
       .catch((error) => {
         if (error instanceof Exception) {
           return reply.status(error.statusCode).send(error.body)
+        }else {
+          return reply.status(500).send(error.message)
         }
       });
     },

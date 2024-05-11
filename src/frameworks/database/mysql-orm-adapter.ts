@@ -39,7 +39,7 @@ export class MysqlOrmAdapter implements OrmAdapter {
   private databaseConnection() {
     return new DataSource({
       type: 'mysql',
-      host: "0.0.0.0",
+      host: DB_HOST,
       port: Number(DB_PORT),
       username: DB_USER,
       password: DB_PASSWORD,
