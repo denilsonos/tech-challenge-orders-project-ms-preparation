@@ -16,12 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v1
-      env:
-        SONAR_TOKEN: "squ_f90a5a463039a790b20032efc3a0eca74375f0cc"
-        SONAR_HOST_URL: "https://5de6-2804-431-c7c9-f1eb-54ec-78e4-e9f1-2766.ngrok-free.app"
-
     - name: Using Node.js
       uses: actions/setup-node@v3
       with:
@@ -32,3 +26,10 @@ jobs:
         npm install
         npm run test
     
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v1
+      env:
+        SONAR_TOKEN: "squ_f90a5a463039a790b20032efc3a0eca74375f0cc"
+        SONAR_HOST_URL: "https://75ae-2804-431-c7c9-f1eb-c017-1efd-6760-22da.ngrok-free.app"
+  
+  
