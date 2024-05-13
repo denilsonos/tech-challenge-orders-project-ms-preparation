@@ -11,7 +11,7 @@
     "lint": "eslint src --ext .ts --fix",
     "dev": "ts-node src/main.ts",
     "start": "ts-node src/main.ts",
-    "test:dev": "npx jest --coverage"
+    "test:dev": "jest --coverage"
   },
   "jest": {
     "testEnvironment": "node",
