@@ -16,6 +16,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v1
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: "http://your_sonarqube_server_url"
+
     - name: Using Node.js
       uses: actions/setup-node@v3
       with:
