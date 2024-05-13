@@ -29,7 +29,7 @@ jobs:
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@v1
       env:
-        SONAR_TOKEN: "squ_f90a5a463039a790b20032efc3a0eca74375f0cc"
+        SONAR_TOKEN: "6b38880eb86443b3e06d659763c9c71d01d6422f"
         SONAR_HOST_URL: "https://75ae-2804-431-c7c9-f1eb-c017-1efd-6760-22da.ngrok-free.app"
   
   
