@@ -30,6 +30,6 @@ jobs:
       uses: sonarsource/sonarqube-scan-action@v1
       env:
         SONAR_TOKEN: "e6c014af7ff69f6d2af9e82683cdcd39c7793125"
-        SONAR_HOST_URL: "http://172.25.112.1:9000"
+        SONAR_HOST_URL: "http://172.25.112.1:9001"
   
   
