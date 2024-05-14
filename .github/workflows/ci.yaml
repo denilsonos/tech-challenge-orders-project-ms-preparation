@@ -30,6 +30,6 @@ jobs:
       uses: sonarsource/sonarqube-scan-action@v1
       env:
         SONAR_TOKEN: "7541b9240e5c2cef9b33fbe3463a21b423b8fbf9"
-        SONAR_HOST_URL: "https://55ec-2804-431-c7c8-b13e-34da-6790-32e1-1985.ngrok-free.app"
+        SONAR_HOST_URL: "https://f9d2-2804-431-c7c8-b13e-34da-6790-32e1-1985.ngrok-free.app"
   
   
