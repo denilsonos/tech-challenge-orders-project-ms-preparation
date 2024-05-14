@@ -8,7 +8,7 @@ module.exports = {
   "reporters": [
     "default",
     ["./node_modules/jest-html-reporter", {
-      "pageTitle": "MS Orders - Test Report",
+      "pageTitle": "MS Preparation - Test Report",
     }]
   ]
 };
