@@ -4,7 +4,7 @@ Project Tech Challenge Group 62
 
 ## Descrição
 
-Este projeto contempla um sistema para gerenciamento de pedidos e estoque.
+Este projeto contempla um sistema para gerenciamento de pedidos.
 ## Tecnologia
 
 TypeScript: 5.2.2
@@ -73,4 +73,9 @@ http://localhost:3000/docs
 ## Postman
 
 [Collection para teste](https://github.com/denilsonos/tech-challenge-orders-project/blob/main/Tech%20Challenge%20Collection.postman_collection.json)
+
+## Evidencia de cobertura de testes
+
+![ms-preparation](https://github.com/denilsonos/tech-challenge-orders-project-ms-preparation/assets/143292502/d80e4ca3-fc42-4b64-94e4-489ace32fd24)
+
 
