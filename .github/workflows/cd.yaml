@@ -8,7 +8,6 @@ env:
   ECR_REPOSITORY: fiap-preparation-app
   EKS_CLUSTER_NAME: fiap-eks
   AWS_REGION: us-east-1 
-    
   
 jobs:
     
