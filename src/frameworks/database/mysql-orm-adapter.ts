@@ -5,7 +5,7 @@ import { OrderDAO } from '../../base/dao/order'
 import { FakeQueue } from '../../adapters/external-services/fake-queue-service/fake-queue-service-adapter'
 
 
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME_PREPARATION, DB_PORT } = process.env
 
 export class MysqlOrmAdapter implements OrmAdapter {
   private static instance: MysqlOrmAdapter | undefined // eslint-disable-line no-use-before-define
@@ -43,7 +43,7 @@ export class MysqlOrmAdapter implements OrmAdapter {
       port: Number(DB_PORT),
       username: DB_USER,
       password: DB_PASSWORD,
-      database: DB_NAME,
+      database: DB_NAME_PREPARATION,
       synchronize: true,
       logging: false,
       entities: [
