@@ -36,10 +36,6 @@ export class FastifyAppAdapter implements AppAdapter {
     this.app.register(findOrderRoute, { prefix: '/api/v1' }) // http://localhost:3000/api/v1/orders
     this.app.register(updateOrderRoute, { prefix: '/api/v1' }) // http://localhost:3000/api/v1/orders/:id
 
-    console.log("process: "+process.env.APP_HOST+" port:"+ process.env.APP_PORT)
-
-    console.log(process.env)
-
     await this.app
       .listen({ host: this.host, port: this.port })
       .then(() => {
