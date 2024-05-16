@@ -34,6 +34,13 @@ export class MysqlOrmAdapter implements OrmAdapter {
   }
 
   private databaseConnection() {
+    console.log("Db values:")
+    console.log("Db DB_HOST:"+process.env.DB_HOST)
+    console.log("Db DB_PORT:"+process.env.DB_PORT)
+    console.log("Db DB_USER:"+process.env.DB_USER)
+    console.log("Db DB_PASSWORD:"+process.env.DB_PASSWORD)
+    console.log("Db DB_NAME_PREPARATION:"+process.env.DB_NAME_PREPARATION)
+
     return new DataSource({
       type: 'mysql',
       host: process.env.DB_HOST,
