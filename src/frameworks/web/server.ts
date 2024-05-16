@@ -8,9 +8,13 @@ export class Server {
   ) {}
 
   public async start(): Promise<void> {
-    console.log('Starting the server...')
-    await this.app.init()
-    console.log('Connectiong the database...')
-    await this.database.init()
+    try{
+      console.log('Starting the server...')
+      await this.app.init()
+      console.log('Connectiong the database...')
+      await this.database.init()
+    }catch(error){
+      console.log('Error: '+error)
+    }
   }
 }
