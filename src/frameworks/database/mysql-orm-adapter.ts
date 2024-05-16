@@ -4,9 +4,6 @@ import { OrmAdapter } from '../../adapters/gateways/orm-adapter'
 import { OrderDAO } from '../../base/dao/order'
 import { FakeQueue } from '../../adapters/external-services/fake-queue-service/fake-queue-service-adapter'
 
-
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME_PREPARATION, DB_PORT } = process.env
-
 export class MysqlOrmAdapter implements OrmAdapter {
   private static instance: MysqlOrmAdapter | undefined // eslint-disable-line no-use-before-define
   public database!: DataSource
@@ -39,11 +36,11 @@ export class MysqlOrmAdapter implements OrmAdapter {
   private databaseConnection() {
     return new DataSource({
       type: 'mysql',
-      host: DB_HOST,
-      port: Number(DB_PORT),
-      username: DB_USER,
-      password: DB_PASSWORD,
-      database: DB_NAME_PREPARATION,
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME_PREPARATION,
       synchronize: true,
       logging: false,
       entities: [
