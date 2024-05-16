@@ -38,7 +38,7 @@ export class FastifyAppAdapter implements AppAdapter {
 
     console.log("process: "+process.env.APP_HOST+" port:"+ process.env.APP_PORT)
 
-    console.log("Envs: "+ process.env)
+    console.log(process.env)
 
     await this.app
       .listen({ host: this.host, port: this.port })
