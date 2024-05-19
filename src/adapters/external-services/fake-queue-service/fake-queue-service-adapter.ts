@@ -19,6 +19,9 @@ export class FakeQueue {
   @UpdateDateColumn({ type: 'datetime', name: 'updatedAt' })
   public updatedAt!: Date;
 
+  @Column({ type: 'int', name: 'idOrder' })
+  public idOrder!: number
+
   @OneToOne(() => OrderDAO, (order) => order.queue)
   @JoinColumn()
   public order!: OrderDAO
@@ -39,6 +42,7 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
     const queueRepository = this.database.getConnection().getRepository(FakeQueue);
     const queue = new FakeQueue();
     queue.status = OrderStatus.Received;
+    queue.idOrder = order.idOrder
     queue.order = order
     await queueRepository.save(queue);
 
@@ -89,7 +93,7 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
     const queueRepository = this.database.getConnection().getRepository(FakeQueue);
     console.log("order queue: "+ JSON.stringify(order))
     const queue = await queueRepository.findOne({
-      where: { order: { idOrder: order.idOrder} },
+      where: { idOrder: order.idOrder },
     });
     console.log("deque: " + JSON.stringify(queue))
     await queueRepository.delete({ id: queue!.id })
