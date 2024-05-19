@@ -90,6 +90,8 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
     const queue = await queueRepository.findOne({
       where: { order: { idOrder: order.idOrder } },
     });
+
+    console.log("deque: " + JSON.stringify(queue))
     await queueRepository.delete({ id: queue!.id })
   }
 }
