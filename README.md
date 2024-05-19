@@ -1,4 +1,4 @@
-# tech-challenge-orders-project
+# tech-challenge-orders-project-ms-preparation
 
 Project Tech Challenge Group 62
 
@@ -37,11 +37,12 @@ Exemplo:
     DB_HOST=db
     DB_USER=root
     DB_PASSWORD=password
-    DB_NAME=mydb
+    DB_NAME_PREPARATION=mydb
     DB_PORT=3306
     APP_PORT=3000
     APP_HOST=0.0.0.0
     NODE_ENV=dev
+    ORDER_MS_HOST=http://localhost:3000
 ```
 
 
