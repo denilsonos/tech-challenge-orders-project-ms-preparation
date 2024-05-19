@@ -110,7 +110,7 @@ export class OrderController implements Order {
 
   private validateId(bodyParams: unknown){
     const schema = z.object({
-      id: z.number().min(1).refine(value => {
+      id: z.string().min(1).refine(value => {
         const parsedNumber = Number(value);
         return !isNaN(parsedNumber);
       }, {
