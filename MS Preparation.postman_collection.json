@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "6f9655ee-0e53-4ebc-b543-f7dec6174ee8",
+		"name": "MS Preparation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5717333"
+	},
+	"item": [
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Content-Length",
+						"value": "1000",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJQ2VONDBIQWFpV2N3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBMU1UWXhOalU0TVRKYUZ3MHpOREExTVRReE56QXpNVEphTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURwblpRdkVHSHAxTmNFbGFRTm5DcC9jQXdwQS85WHB6Z0NKWFpFQXlPVG5OMGpHanp2VS9Oc0tmZzQKUHVMaUlxRXRoNUlna3F3ZXZjNHZlMW9XREF0QVlTQ2tvaGRpdDNJanFiZkVjMTFhUkZFci9USnNma21kaEdGYwp0WFAwSjVQSnhzeW80RnA3ZFQyQnZ1YnRqZjNpZEFveFFzbUlLbWxzZDRDeHJzbXoyU2czYnZ0U2wwVUx5UUdRCmthM29WSTBIMjFYZWVLV01sSDJuQ2h5VjZYc252L1ZINXZZQW9EWXJWRDNvNHNpOHVyWHluVjg1dkNhUW9TeDAKVU5tT0NPZXRaaDJUYm9VaDFpS2JOY2FGUXduK29ZRTVpQkxGdSswVmFaZEsrais0ejlxOUhyN09ycEpnbWc5VQpGTS9WUFkxQmdFOFV6SDI3UzFFQlQ2Wko0ZFZEQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSWTAvL1Y2Q0FmTWlQUHliRFpPeFNRam9IdTBUQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQStNK2llRjYrZwpUVTR2YTlzbmZpb3RCQ2MwKzFyK2plNmFvTzNlbTYxQ0pJaGp0TVlFM3dRT1BRZ1dyOEYyQnNUUVRlUkZjdWxiCklpdXkxSHdnbjNRSkg2TlNXQWVtNXNKWEl2bnpFSmZZdENnVklvdzZSK0FiZTdzY0YxV0NwK2xSS1dNbXNxR3cKUXBiS240ckljNE9OcUdveXZ6ejdGMGNVZWdHSjlvakZsTnQ5Z0Y5cnQ5MUVaMW5jN1dBTHpRSTQyNE5Mam1oVgpQOC9wRzBWOThUQkkyaEcrMkJReEpleUVCK3RjZFFXeE5PZndkMERGdjZ0YVUzT3BPN1JlMlBJLzZvUkxybzlWCjhNZzB2WjYrTTlmMTJmUEhRMk9ncGpsOSs2c0pQTVV3YkpOT1BRWXo2eWZnMUJUbzluckt5M3JVKzhnNzVmL0sKQmFHYklGMEJscFdUCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idOrder\": 4,\r\n    \"status\": \"CREATED\",\r\n    \"createdAt\": \"2024-05-11T00:35:21.084Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url-aws}}/ms-preparation/ms-preparation/api/v1/orders",
+					"protocol": "https",
+					"host": [
+						"{{url-aws}}"
+					],
+					"path": [
+						"ms-preparation",
+						"ms-preparation",
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"CREATED\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url-aws}}/ms-preparation/api/v1/orders/123",
+					"protocol": "https",
+					"host": [
+						"{{url-aws}}"
+					],
+					"path": [
+						"ms-preparation",
+						"api",
+						"v1",
+						"orders",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get queue of orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{url-aws}}/ms-preparation/ms-preparation/api/v1/orders?status=",
+					"protocol": "https",
+					"host": [
+						"{{url-aws}}"
+					],
+					"path": [
+						"ms-preparation",
+						"ms-preparation",
+						"api",
+						"v1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

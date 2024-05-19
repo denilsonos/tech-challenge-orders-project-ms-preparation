@@ -8,19 +8,19 @@ describe('OrderClient', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        process.env.ORDERS_MS_HOST = "http://localhost/test"
+        process.env.ORDERS_MS_HOST = "http://localhost"
     });
 
     describe('updateStatus', () => {
        it('should update status with success', async () => {
             const orderClient = new OrderClientServiceAdapter();
-            axiosMock.onPatch("http://localhost/test/orders/"+"1").reply(200);
+            axiosMock.onPatch("http://localhost/ms-orders/api/v1/orders/"+"1").reply(200);
             await orderClient.updateStatus(1, OrderStatus.Created)
         });
 
         it('should update status with success', async () => {
             const orderClient = new OrderClientServiceAdapter();
-            axiosMock.onPatch("http://localhost/test/orders/"+"2").reply(404);
+            axiosMock.onPatch("http://localhost/ms-orders/api/v1/orders/"+"2").reply(404);
             
             try{
                 await orderClient.updateStatus(2, OrderStatus.Created)
