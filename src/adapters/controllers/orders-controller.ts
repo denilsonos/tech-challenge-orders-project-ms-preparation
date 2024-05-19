@@ -42,7 +42,7 @@ export class OrderController implements Order {
     const result = schema.safeParse(bodyParams)
 
     if (!result.success) {
-      console.log("validation error: "+result)
+      console.log("validation error: "+ result.error)
       throw new BadRequestException('Validation error!', result.error.issues)
     }
 
