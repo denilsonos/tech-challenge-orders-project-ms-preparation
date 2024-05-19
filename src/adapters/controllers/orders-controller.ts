@@ -98,7 +98,7 @@ export class OrderController implements Order {
     }
 
 
-    console.log("get by id: " + orderIdResult.data)
+    console.log("get by id: " + JSON.stringify(orderIdResult.data))
     const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
     if(!order){
