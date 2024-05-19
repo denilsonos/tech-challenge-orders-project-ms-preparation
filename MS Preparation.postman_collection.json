@@ -37,13 +37,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{url-aws}}/ms-preparation/ms-preparation/api/v1/orders",
+					"raw": "https://{{url-aws}}/ms-preparation/api/v1/orders",
 					"protocol": "https",
 					"host": [
 						"{{url-aws}}"
 					],
 					"path": [
-						"ms-preparation",
 						"ms-preparation",
 						"api",
 						"v1",
@@ -90,13 +89,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://{{url-aws}}/ms-preparation/ms-preparation/api/v1/orders?status=",
+					"raw": "https://{{url-aws}}/ms-preparation/api/v1/orders?status=",
 					"protocol": "https",
 					"host": [
 						"{{url-aws}}"
 					],
 					"path": [
-						"ms-preparation",
 						"ms-preparation",
 						"api",
 						"v1",
