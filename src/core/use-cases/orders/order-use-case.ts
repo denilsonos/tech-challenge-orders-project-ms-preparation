@@ -43,6 +43,7 @@ export class OrderUseCaseImpl implements OrderUseCase {
     async update(order: OrderDTO, status: string): Promise<void> {
         await this.queueService.dequeue(order)
         await this.orderRepository.update(order.idOrder!, status)
+        console.log("chegou aqui")
         await this.orderClient.updateStatus(order.idOrder, order.status)
     }
 
