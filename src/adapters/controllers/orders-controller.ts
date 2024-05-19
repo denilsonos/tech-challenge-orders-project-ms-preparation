@@ -77,6 +77,9 @@ export class OrderController implements Order {
       status: z.nativeEnum(OrderStatus),
     })
 
+    console.log("body> "+ JSON.stringify(bodyParams))
+    console.log("path> "+ JSON.stringify(params))
+
     const statusResult = schema.safeParse(bodyParams)
     const orderIdResult = this.validateId(params)
 
