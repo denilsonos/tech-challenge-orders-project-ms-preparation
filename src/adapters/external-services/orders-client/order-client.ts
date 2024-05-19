@@ -6,7 +6,7 @@ export class OrderClientServiceAdapter implements OrderClientAdapter {
 
     async updateStatus(idOrder: number, status: string): Promise<void> {  
         var basePath = process.env.ORDERS_MS_HOST 
-        var url = basePath + "/orders/" + idOrder
+        var url = basePath + "/ms-orders/api/v1/orders/" + idOrder
         
         const response = await axios.patch(url,{
             status: status
