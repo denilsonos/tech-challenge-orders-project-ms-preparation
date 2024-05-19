@@ -19,7 +19,6 @@ export const createOrderRoute = async (fastify: FastifyInstance) => {
         });
       })
       .catch((error) => {
-        console.log("error: "+error)
         if (error instanceof Exception) {
           return reply.status(error.statusCode).send(error.body)
         }else {
