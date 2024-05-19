@@ -84,6 +84,7 @@ export class OrderController implements Order {
     const orderIdResult = this.validateId(params)
 
     if (!statusResult.success) {
+      console.log("status: " + statusResult.error)
       throw new BadRequestException('Validation error!', statusResult.error.issues)
     }
 
@@ -92,6 +93,7 @@ export class OrderController implements Order {
     }
 
     if (!orderIdResult.success) {
+      console.log("orderId: " + orderIdResult.error)
       throw new BadRequestException('Validation error!', orderIdResult.error.issues)
     }
 
