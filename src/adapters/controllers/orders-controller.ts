@@ -39,12 +39,9 @@ export class OrderController implements Order {
       createdAt: z.coerce.date().optional(),
     })
 
-    console.log("values: " + JSON.stringify(bodyParams))
-
     const result = schema.safeParse(bodyParams)
 
     if (!result.success) {
-      console.log("validation error: "+ result.error)
       throw new BadRequestException('Validation error!', result.error.issues)
     }
 
@@ -77,14 +74,10 @@ export class OrderController implements Order {
       status: z.nativeEnum(OrderStatus),
     })
 
-    console.log("body> "+ JSON.stringify(bodyParams))
-    console.log("path> "+ JSON.stringify(params))
-
     const statusResult = schema.safeParse(bodyParams)
     const orderIdResult = this.validateId(params)
 
     if (!statusResult.success) {
-      console.log("status: " + statusResult.error)
       throw new BadRequestException('Validation error!', statusResult.error.issues)
     }
 
@@ -93,22 +86,16 @@ export class OrderController implements Order {
     }
 
     if (!orderIdResult.success) {
-      console.log("orderId: " + orderIdResult.error)
       throw new BadRequestException('Validation error!', orderIdResult.error.issues)
     }
 
-    console.log("get by id: " + JSON.stringify(orderIdResult.data))
     const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
-    console.log("chegou aqui - get order")
-    console.log("order found: "+ JSON.stringify(order))
     if(!order){
-      console.log("order not found")
       throw new NotFoundException("Order not found!")
     }
 
     if (order.status == OrderStatus.Ready) {
-      console.log("status ready")
       throw new ConflictException("Order is ready!")
     } 
 
