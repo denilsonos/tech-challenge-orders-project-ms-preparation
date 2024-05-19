@@ -97,15 +97,17 @@ export class OrderController implements Order {
       throw new BadRequestException('Validation error!', orderIdResult.error.issues)
     }
 
-
     console.log("get by id: " + JSON.stringify(orderIdResult.data))
     const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
+    console.log("chegou aqui - get order")
     if(!order){
+      console.log("order not found")
       throw new NotFoundException("Order not found!")
     }
 
     if (order.status == OrderStatus.Ready) {
+      console.log("status ready")
       throw new ConflictException("Order is ready!")
     } 
 

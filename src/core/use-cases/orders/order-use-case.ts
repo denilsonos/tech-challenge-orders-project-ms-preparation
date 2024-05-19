@@ -42,9 +42,11 @@ export class OrderUseCaseImpl implements OrderUseCase {
 
     async update(order: OrderDTO, status: string): Promise<void> {
         await this.queueService.dequeue(order)
+        console.log("chegou aqui - queue")
         await this.orderRepository.update(order.idOrder!, status)
-        console.log("chegou aqui")
+        console.log("chegou aqui - chamada update status repo")
         await this.orderClient.updateStatus(order.idOrder, order.status)
+        console.log("chegou aqui - chamada update status client")
     }
 
     async getById(orderId: number): Promise<OrderEntity | null> {
