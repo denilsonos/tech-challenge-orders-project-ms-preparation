@@ -101,6 +101,7 @@ export class OrderController implements Order {
     const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
     console.log("chegou aqui - get order")
+    console.log("order found: "+ JSON.stringify(order))
     if(!order){
       console.log("order not found")
       throw new NotFoundException("Order not found!")
