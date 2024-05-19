@@ -91,11 +91,12 @@ export class FakeQueueServiceAdapter implements QueueServiceAdapter {
    */
   async dequeue(order: OrderDAO): Promise<void> {
     const queueRepository = this.database.getConnection().getRepository(FakeQueue);
-    console.log("order queue: "+ JSON.stringify(order))
     const queue = await queueRepository.findOne({
       where: { idOrder: order.idOrder },
     });
-    console.log("deque: " + JSON.stringify(queue))
-    await queueRepository.delete({ id: queue!.id })
+
+    if(!queue){
+      await queueRepository.delete({ id: queue!.id })
+    }
   }
 }

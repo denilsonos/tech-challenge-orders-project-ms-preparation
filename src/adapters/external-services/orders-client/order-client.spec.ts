@@ -8,7 +8,7 @@ describe('OrderClient', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        process.env.ORDERS_MS_HOST = "http://localhost"
+        process.env.ORDER_MS_HOST = "http://localhost"
     });
 
     describe('updateStatus', () => {

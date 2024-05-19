@@ -21,7 +21,6 @@ export const updateOrderRoute = async (fastify: FastifyInstance) => {
         if (error instanceof Exception) {
           return reply.status(error.statusCode).send(error.body)
         }else {
-          console.log("error: "+ JSON.stringify(error))
           return reply.status(500).send(error.message)
         }
       })
