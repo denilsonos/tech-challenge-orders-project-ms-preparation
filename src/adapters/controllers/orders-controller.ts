@@ -39,6 +39,8 @@ export class OrderController implements Order {
       createdAt: z.coerce.date().optional(),
     })
 
+    console.log("values: " + bodyParams)
+
     const result = schema.safeParse(bodyParams)
 
     if (!result.success) {
