@@ -97,6 +97,8 @@ export class OrderController implements Order {
       throw new BadRequestException('Validation error!', orderIdResult.error.issues)
     }
 
+
+    console.log("get by id: " + orderIdResult.data)
     const order = await this.orderUseCase.getById(Number(orderIdResult.data.id))
 
     if(!order){

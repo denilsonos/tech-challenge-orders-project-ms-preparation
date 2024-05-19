@@ -8,8 +8,10 @@ export class OrderClientServiceAdapter implements OrderClientAdapter {
         var basePath = process.env.ORDERS_MS_HOST 
         var url = basePath + "/ms-orders/api/v1/orders/" + idOrder
         
-        const response = await axios.patch(url,{
+        await axios.patch(url,{
             status: status
-        });
+        }).catch((error) => {
+            console.error('Error initialize to the database:', error)
+            throw error});
     }
 }
