@@ -11,7 +11,7 @@ export class OrderClientServiceAdapter implements OrderClientAdapter {
         await axios.patch(url,{
             status: status
         }).catch((error) => {
-            console.error('Error initialize to the database:', error)
-            throw error});
+            throw error
+        });
     }
 }
