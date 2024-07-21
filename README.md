@@ -32,6 +32,11 @@ O desenvolvimento se deu por meio de Pair programming, onde os atores e ouvintes
 
 ![arquitetura-fase5](https://github.com/user-attachments/assets/c5a3540f-8642-479f-b095-b05e9caa9407)
 
+### Padrão SAGA
+O padrão SAGA escolhido foi <b>coreografado</b>, por conta da familiaridade da equipe com filas em seu cotidiano, além de permitir maior liberdade no tratamento dos dados.
+Por exemplo, possibilitando a reutilização das informações em determinado tópico, o que abstrai a complexidade da aplicação e nos permite evoluir o produto de forma mais fácil.
+Caso escolhêssemos SAGA orquestrada, adicionaremos complexidade ao projeto, que devido ao tamanho não possui necessidade.
+
 ## Deploy
 
 Para rodar o projeto você precisa configurar o arquivo .env, utilizando como base o .env.example.
